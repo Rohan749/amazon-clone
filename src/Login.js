@@ -1,0 +1,113 @@
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import app from "./firebase";
+
+import "./Login.css";
+
+const Login = () => {
+
+  //As I read the docs, previously in order to navigate, we used useHistory, but now useNavigate.
+  const history = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const auth = getAuth();
+
+
+  const signIn = (event) => {
+    event.preventDefault(app);
+    // FIREBASE SignIn WORK WILL BE DONE HERE
+
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      if(auth) {
+        history("/")
+      }
+    })
+    .catch((error) => {
+      // const errorCode = error.code;
+      if(error.code == "auth/invalid-email")
+      alert("This email is not registered in firebase")
+    })
+  };
+
+  const register = (event) => {
+    event.preventDefault();
+
+    // Firebase Registration will be done here
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        alert("Successfully created account")
+        if(auth) {
+          history("/")
+        }
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        if(!auth) {
+          alert("You haven't created any account.")
+        }
+        else {
+          alert(errorCode)
+          // const errorMessage = error.message;
+        }
+
+        // ..
+      });
+  };
+
+  return (
+    <>
+      <div className="login">
+        <Link to="/">
+          <img
+            src="https://pngimg.com/uploads/amazon/amazon_PNG13.png"
+            className="login__logo"
+          />
+        </Link>
+
+        <div className="login__container">
+          <h1>SIGN IN</h1>
+          <form>
+            <h5>E-mail</h5>
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <h5>Password</h5>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <button
+              className="login__signInButton"
+              type="submit"
+              onClick={signIn}
+            >
+              Sign In
+            </button>
+          </form>
+
+          <p>
+            By Signing-in, you agree to Amazon Clone's Conditions of use and
+            sale. Please see our Privacy Notice, our cookiess notices and our
+            interest based ads notice.
+          </p>
+
+          <button className="login__registerButton" onClick={register}>
+            Create your amazon account
+          </button>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Login;
