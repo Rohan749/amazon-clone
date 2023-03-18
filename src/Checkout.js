@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Checkout.css";
 import CheckoutProduct from "./CheckoutProduct";
 import { useStateValue } from "./StateProvider";
 import Subtotal from "./Subtotal";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 
 const Checkout = () => {
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   const [{basket, user}, dispatch] = useStateValue();
 
   return (
-    <div className="checkout">
+    <div data-aos="fade-zoom-in" className="checkout">
       <div className="checkout__left">
         <img
           className="checkout__ad"
@@ -31,7 +37,6 @@ const Checkout = () => {
         </div>
       </div>
       <div className="checkout__right">
-        <h2 className="">The subtotal will go here</h2>
         <Subtotal />
       </div>
     </div>

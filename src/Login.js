@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import app from "./firebase";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 import "./Login.css";
 
@@ -12,11 +13,13 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const auth = getAuth();
+  const provider = new GoogleAuthProvider();
 
 
   const signIn = (event) => {
     event.preventDefault(app);
-    // FIREBASE SignIn WORK WILL BE DONE HERE
+    // FIREBASE SignIn WORK WILL BE DONE HERE Yaad rakhne ka jaroorat ny h.
+    // Firebase docs se update rakho.
 
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
@@ -30,6 +33,34 @@ const Login = () => {
       alert("This email is not registered in firebase")
     })
   };
+
+  const signInwithGoogle = (event) => {
+    event.preventDefault();
+
+    signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+    if(auth) {
+      history("/")
+    }
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+
+  }
 
   const register = (event) => {
     event.preventDefault();
@@ -92,6 +123,13 @@ const Login = () => {
               onClick={signIn}
             >
               Sign In
+            </button>
+            <button
+              className="google__signInButton"
+              type="submit"
+              onClick={signInwithGoogle}
+            >
+              Sign In with Google
             </button>
           </form>
 

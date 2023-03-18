@@ -1,17 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./Subtotal.css"
 import CurrencyFormat from 'react-currency-format';
 import { useStateValue } from './StateProvider';
+import { useNavigate } from 'react-router-dom';
 import { getBasketTotal } from './reducer';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Subtotal = () => {
+
+    useEffect(() => {
+        AOS.init();
+      }, []);
+    
+
+    const history = useNavigate();
 
     const [ {basket}, dispatch] = useStateValue();
     let sum = 0;
 
 
   return (
-    <div className='subtotal'>
+    <div data-aos="fade-zoom-in"
+     className='subtotal'>
         <CurrencyFormat 
             renderText={(value) => (
                 <>
@@ -31,7 +42,7 @@ const Subtotal = () => {
             thousandSeperator={true}
             prefix={"$"}
         />
-        <button>Proceed to checkout</button>
+        <button onClick={e=>history("/payment")}>Proceed to checkout</button>
     </div>
   )
 }

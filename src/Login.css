@@ -9,10 +9,12 @@
 
 .login {
     display: flex;
-    height: 100vh;
+    height: fit-content;
+    min-height: 100vh;
     flex-direction: column;
     background-color: white;
     align-items: center;
+    padding-bottom: 2rem;
 }
 
 .login__container {
@@ -51,6 +53,7 @@
     border: 1px solid;
     margin-top: 10px;
     border-color: #a88734;
+    cursor: pointer;
 }
 
 .login__registerButton {
@@ -60,4 +63,15 @@
     border: 1px solid;
     margin-top: 10px;
     border-color: darkgrey;
+}
+
+.google__signInButton {
+    background: #ffffff;
+    border-radius: 2px;
+    width: 100%;
+    height: 30px;
+    border: 1px solid;
+    margin-top: 10px;
+    border-color: #344da8;
+    cursor: pointer;
 }

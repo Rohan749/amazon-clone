@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./Product.css"
 import {useStateValue} from "./StateProvider"
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Product = ({ id, title, image, price, rating }) => {
+  useEffect(() => {
+    AOS.init();
+  }, [])
+
 
   const [state, dispatch] = useStateValue();
 
@@ -15,15 +21,16 @@ const Product = ({ id, title, image, price, rating }) => {
         title: title,
         image: image,
         price: price,
-        rating: rating
+        rating: rating,
       },
     });
   }
 
   return (
-    <div className='product'>
+    <div data-aos="fade-zoom-in" className='product'>
         <div className='product__info'>
-            <p>{title}</p>
+            <p className='product__title'>{title}</p>
+            
             <p className='product__price'>
                 <small>$</small>
                 <strong>{price}</strong>

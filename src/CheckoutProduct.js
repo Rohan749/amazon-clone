@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./CheckoutProduct.css"
 import { useStateValue } from './StateProvider'
 
 const CheckoutProduct = ({id, image, title, price, rating}) => {
+
 
   const [{basket}, dispatch] = useStateValue();
 
@@ -15,7 +16,10 @@ const CheckoutProduct = ({id, image, title, price, rating}) => {
 
   return (
     <div className='checkoutProduct'>
-        <img className='checkoutProduct__image' src={image}/>
+      <div className='image__container'>
+      <img className='checkoutProduct__image' src={image}/>
+      </div>
+        
         <div className='checkoutProduct__info'>
             <p className='checkoutProduct__title'>{title}</p>
             <p className='checkoutProduct__price'>

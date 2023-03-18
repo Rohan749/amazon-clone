@@ -20,6 +20,7 @@
 }
 
 .subtotal > button {
+    cursor: pointer;
     background: #f0c14b;
     border-radius: 2px;
     width: 100%;
@@ -28,4 +29,26 @@
     margin-top: 10px;
     border-color: #a88734;
     color: #111;
+}
+
+@media only screen and (min-width: 220px) and (max-width: 768px) {
+    .subtotal {
+        width: 82vw;
+        margin-right: 3rem;
+        border-radius: 1px;
+    }
+    
+    .subtotal__gift {
+        display: flex;
+        align-items: center;
+    }
+    
+    .subtotal__gift > input {
+        margin-right: 5px;
+    }
+    
+    .subtotal > button {
+        height: 20px;
+        margin-top: 16px;
+    }
 }
